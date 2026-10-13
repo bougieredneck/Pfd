@@ -1,0 +1,25 @@
+{
+  "id": "./",
+  "name": "My Prize Fighter Day",
+  "short_name": "Prize Fighter",
+  "description": "Ten daily standards. Streaks, Friday weigh-ins, and POCs toward 500.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0c0b09",
+  "theme_color": "#0c0b09",
+  "icons": [
+    {
+      "src": "./icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
