@@ -4,7 +4,7 @@ The app keeps your days on the phone. The sheet is optional. If you leave the li
 
 Do this once, on a computer, in the Google account that should own the sheet.
 
-1. Open [Google Sheets](https://sheets.google.com) and make a blank spreadsheet. Name it Prize Fighter.
+1. Open [Google Sheets](https://sheets.google.com) and make a blank spreadsheet. Name it The BR Effect.
 2. Click **Extensions**, then **Apps Script**.
 3. Delete the code that is already there.
 4. Open this file and copy all of it: [apps-script/Code.gs](https://bougieredneck.github.io/Pfd/apps-script/Code.gs)
@@ -16,8 +16,8 @@ Do this once, on a computer, in the Google account that should own the sheet.
 10. Click **Deploy**. If Google asks you to allow the script, allow it. It only writes this spreadsheet.
 11. If you see "Google hasn't verified this app", click **Advanced**, then **Go to … (unsafe)**. It is your script.
 12. Copy the web app URL. It ends in `/exec`.
-13. Open that URL once in the browser. You should see: Prize Fighter sync is ready.
-14. On the iPhone, open Prize Fighter from the **home-screen icon**.
+13. Open that URL once in the browser. You should see: The BR Effect sync is ready.
+14. On the iPhone, open The BR Effect from the **home-screen icon**.
 15. Tap **More**, then **Settings**.
 16. Paste the URL into **Apps Script link**. Tap away. **Saved** appears.
 17. Tap **Sync now**. Then open the spreadsheet. There is a **Days** tab with one row per day.

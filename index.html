@@ -12,14 +12,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0c0b09">
 <meta name="color-scheme" content="dark">
-<meta name="description" content="My Prize Fighter Day. Daily standards, morning, evening wins, 2027 goals, and an optional private sheet. Stored on this phone.">
+<meta name="description" content="The BR Effect. Daily standards, morning, evening wins, 2027 goals, and an optional private sheet. Stored on this phone.">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Prize Fighter">
-<meta name="application-name" content="My Prize Fighter Day">
+<meta name="apple-mobile-web-app-title" content="BR Effect">
+<meta name="application-name" content="The BR Effect">
 <meta name="format-detection" content="telephone=no">
-<title>My Prize Fighter Day</title>
+<title>The BR Effect</title>
 <link rel="apple-touch-icon" href="./icon-512.png" sizes="512x512">
 <link rel="icon" href="./icon-512.png" type="image/png">
 <link rel="manifest" href="./manifest.json">
@@ -877,7 +877,7 @@
 
   function normalize(raw, strict) {
     if (!raw || typeof raw !== "object" || Array.isArray(raw)) {
-      if (strict) throw new Error("That file is not a Prize Fighter backup.");
+      if (strict) throw new Error("That file is not a BR Effect backup.");
       return fresh();
     }
     var base = fresh();
@@ -1045,7 +1045,7 @@
 
   function homeScreenNote() {
     if (isStandalone()) return "";
-    return '<p class="homescreen-note">On iPhone, Safari and the home-screen icon keep separate days. Always open Prize Fighter from the home-screen icon.</p>';
+    return '<p class="homescreen-note">On iPhone, Safari and the home-screen icon keep separate days. Always open The BR Effect from the home-screen icon.</p>';
   }
 
   function findItem(id) {
@@ -1454,7 +1454,7 @@
     var showFriday = isFriday(date);
     return ''
       + "<header class=\"hero\">"
-      + '<div class="hero-top"><p class="brand">My Prize Fighter Day</p><p class="when">' + esc(pretty(date)) + "</p></div>"
+      + '<div class="hero-top"><p class="brand">The BR Effect</p><p class="when">' + esc(pretty(date)) + "</p></div>"
       + "<h1 class=\"blessing\">WE ARE BLESSED AND HIGHLY FAVORED EVERYWHERE WE GO!</h1>"
       + '<div class="score-row">'
       + ringSvg(sc, total)
@@ -1496,7 +1496,7 @@
         + '<span class="nums"><strong data-item-streak="' + esc(item.id) + '">' + cur + "</strong><small>best " + top + "</small></span></li>";
     }).join("");
     return ''
-      + '<header class="subtop"><p class="brand">My Prize Fighter Day</p></header>'
+      + '<header class="subtop"><p class="brand">The BR Effect</p></header>'
       + '<h1 class="screen-title">Streaks</h1>'
       + '<section class="streak-hero">'
       + '<article class="' + (current > 0 ? "hot" : "") + '"><p class="kicker">Current</p><strong data-streak-current>' + current + '</strong><span>' + (current === 1 ? "day" : "days") + "</span></article>"
@@ -1623,7 +1623,7 @@
       }).join("");
     }).join("");
     return ''
-      + '<header class="subtop"><p class="brand">My Prize Fighter Day</p></header>'
+      + '<header class="subtop"><p class="brand">The BR Effect</p></header>'
       + '<h1 class="screen-title">Settings</h1>'
       + '<section class="section"><h2>Backup</h2>'
       + '<div class="backup-actions">'
@@ -1648,7 +1648,7 @@
       + "</div>"
       + '<p class="hint">Banked POCs are clients already counted before this phone.</p></section>'
       + '<section class="section"><h2>Home screen</h2>'
-      + '<p class="homescreen-note">On iPhone, Safari and the home-screen icon keep separate days. Always open Prize Fighter from the home-screen icon.</p>'
+      + '<p class="homescreen-note">On iPhone, Safari and the home-screen icon keep separate days. Always open The BR Effect from the home-screen icon.</p>'
       + '<p class="hint">On iPhone: Share, then Add to Home Screen. On Android: browser menu, then Install app or Add to Home screen. If the icon still opens a link ending in index.html, remove it and add it again from this page.</p>'
       + (ui.canInstall ? '<button type="button" class="btn" data-action="install">Install</button>' : "")
       + '<p class="hint">Stored on this phone. A sheet link is optional.</p>'
@@ -1691,7 +1691,7 @@
       + '<header class="subtop"><p class="brand">Evening</p><p class="when">' + esc(pretty(date)) + "</p></header>"
       + '<h1 class="screen-title">Wins</h1>'
       + '<div class="score-row">' + ringSvg(sc, total)
-      + '<div class="score-side"><p class="score-caption">Today\'s PFD score</p><p class="hint">Checked items on Today.</p></div></div>'
+      + '<div class="score-side"><p class="score-caption">Today\'s score</p><p class="hint">Checked items on Today.</p></div></div>'
       + '<p class="hint stack">Three wins vs yesterday.</p>'
       + boxes;
   }
@@ -1725,7 +1725,7 @@
       ["settings", "Settings"]
     ];
     return ''
-      + '<header class="subtop"><p class="brand">My Prize Fighter Day</p></header>'
+      + '<header class="subtop"><p class="brand">The BR Effect</p></header>'
       + '<h1 class="screen-title">More</h1>'
       + links.map(function (link) {
         return '<button type="button" class="more-link" data-action="nav" data-view="' + link[0] + '">' + link[1] + '<span aria-hidden="true">›</span></button>';
@@ -1961,7 +1961,7 @@
     var total = totalItems();
     ui.justKey = date + ":" + id;
     ui.celebrate = before < total && after === total;
-    if (ui.celebrate) showToast("Full day. Prizefighter Day.");
+    if (ui.celebrate) showToast("Full day. The BR Effect.");
     if (navigator.vibrate) navigator.vibrate(12);
     save(date);
     render({ keepScroll: true });
@@ -2083,7 +2083,7 @@
       var url = URL.createObjectURL(blob);
       var link = document.createElement("a");
       link.href = url;
-      link.download = "my-prize-fighter-day-" + todayKey() + ".json";
+      link.download = "the-br-effect-" + todayKey() + ".json";
       document.body.appendChild(link);
       link.click();
       link.remove();

@@ -1,8 +1,8 @@
 {
   "id": "./",
-  "name": "My Prize Fighter Day",
-  "short_name": "Prize Fighter",
-  "description": "Ten daily standards. Streaks, Friday weigh-ins, and POCs toward 500.",
+  "name": "The BR Effect",
+  "short_name": "BR Effect",
+  "description": "The BR Effect. Daily standards, streaks, Friday weigh-ins, and POCs toward 500.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
