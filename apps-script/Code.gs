@@ -93,5 +93,5 @@ function doPost(e) {
 }
 
 function doGet() {
-  return ContentService.createTextOutput("Prize Fighter sync is ready.").setMimeType(ContentService.MimeType.TEXT);
+  return ContentService.createTextOutput("The BR Effect sync is ready.").setMimeType(ContentService.MimeType.TEXT);
 }
