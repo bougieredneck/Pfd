@@ -12,7 +12,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0c0b09">
 <meta name="color-scheme" content="dark">
-<meta name="description" content="My Prize Fighter Day. Ten daily standards, streaks, Friday weigh-ins, and a POC count. Stored on this phone.">
+<meta name="description" content="My Prize Fighter Day. Daily standards, morning, evening wins, 2027 goals, and an optional private sheet. Stored on this phone.">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -53,9 +53,9 @@
     -webkit-font-smoothing: antialiased;
     overscroll-behavior: none;
   }
-  button, input, select { font: inherit; color: inherit; touch-action: manipulation; }
+  button, input, select, textarea { font: inherit; color: inherit; touch-action: manipulation; }
   button { cursor: pointer; }
-  button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible {
+  button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
     outline: 2px solid var(--gold);
     outline-offset: 2px;
   }
@@ -229,6 +229,7 @@
     transition: width 0.45s cubic-bezier(.2, .8, .2, 1);
   }
   .hint { margin: 8px 0 0; color: var(--muted); font-size: 13px; line-height: 1.35; }
+  .hint a { color: var(--gold-2); font-weight: 800; }
   .hint.error { color: var(--danger); font-weight: 700; }
   .group-block { margin-top: 18px; }
   .group {
@@ -345,7 +346,7 @@
   }
   .weigh-form button { grid-column: 1 / -1; }
   label.field { display: block; color: var(--muted); font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
-  input, select {
+  input, select, textarea {
     width: 100%;
     margin-top: 6px;
     min-height: 52px;
@@ -355,6 +356,37 @@
     background: #100e0b;
     color: var(--cream);
   }
+  textarea { min-height: 96px; resize: vertical; line-height: 1.35; }
+  .stack { display: block; margin-top: 16px; }
+  .who-card {
+    margin-top: 22px;
+    padding: 14px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+  }
+  .who-card h2 { margin: 0; font-size: 1.45rem; letter-spacing: -0.03em; }
+  .goal-row { display: flex; gap: 8px; align-items: center; margin-top: 8px; }
+  .goal-row input { margin-top: 0; flex: 1; }
+  .goal-row .icon-btn { width: 52px; height: 52px; flex: 0 0 52px; }
+  .more-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    min-height: 72px;
+    margin: 0 0 10px;
+    padding: 16px 18px;
+    border-radius: 16px;
+    border: 1px solid var(--line);
+    background: var(--card);
+    color: var(--cream);
+    font-size: 1.2rem;
+    font-weight: 800;
+    text-align: left;
+  }
+  .more-link span { color: var(--gold); font-size: 1.5rem; line-height: 1; }
+  .btn-block { display: block; width: 100%; margin-top: 10px; }
   .iam { margin-top: 22px; }
   .iam-toggle {
     width: 100%;
@@ -582,7 +614,7 @@
     gap: 3px;
     font-size: 10px;
     font-weight: 800;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.02em;
     text-transform: uppercase;
   }
   .tab svg { width: 22px; height: 22px; display: block; }
@@ -662,16 +694,17 @@
   </div>
   <nav class="tabbar" aria-label="Primary">
     <button type="button" class="tab" data-action="nav" data-view="today"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12.5 11 15.5 16 9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Today</button>
-    <button type="button" class="tab" data-action="nav" data-view="streaks"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2.5s4.2 4.2 4.2 8.1a4.2 4.2 0 0 1-8.4 0c0-1.6.8-3 1.5-3.8C8.4 8.6 8 10.6 9.4 12c-.2-2.2.8-4.8 2.6-9.5Z"/></svg>Streak</button>
-    <button type="button" class="tab" data-action="nav" data-view="history"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M4 10h16M8 3v4M16 3v4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>History</button>
-    <button type="button" class="tab" data-action="nav" data-view="weight"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 16.5 9 11l3.2 3.2L20 6.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Weight</button>
-    <button type="button" class="tab" data-action="nav" data-view="settings"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h16M4 16h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="9" cy="8" r="2.2" fill="currentColor"/><circle cx="15" cy="16" r="2.2" fill="currentColor"/></svg>Settings</button>
+    <button type="button" class="tab" data-action="nav" data-view="morning"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.2 5.2l1.6 1.6M17.2 17.2l1.6 1.6M18.8 5.2l-1.6 1.6M6.8 17.2l-1.6 1.6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Morning</button>
+    <button type="button" class="tab" data-action="nav" data-view="evening"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 3.2A8 8 0 1 0 20.8 14 6.2 6.2 0 0 1 16 3.2Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>Evening</button>
+    <button type="button" class="tab" data-action="nav" data-view="goals"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 21V4M6 4h11l-2.2 3.5L17 11H6" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/></svg>Goals</button>
+    <button type="button" class="tab" data-action="nav" data-view="more"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h14M5 12h14M5 17h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>More</button>
   </nav>
   <div id="sheet"></div>
   <noscript><p class="noscript">Turn JavaScript on. This page runs on your phone and does not use a server.</p></noscript>
 <script>
 (function () {
   var KEY = "prizefighter-day-v1";
+  var SYNC_URL_RE = /^https:\/\/script\.google\.com\/macros\/s\/[A-Za-z0-9_-]+\/(exec|dev)\/?(\?.*)?$/;
   var GROUPS = ["PERSONAL", "PROFESSIONAL", "SERVICE", "DISCIPLINE"];
   var WEEKDAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
   var MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -701,8 +734,11 @@
     canInstall: false,
     importError: "",
     ringFrom: null,
-    celebrate: false
+    celebrate: false,
+    focusGoal: ""
   };
+  var syncQueue = {};
+  var syncTimer = 0;
 
   function esc(value) {
     return String(value).replace(/[&<>"']/g, function (ch) {
@@ -762,6 +798,14 @@
     return Math.min(max, Math.max(min, n));
   }
 
+  function clip(value, max) {
+    return String(value == null ? "" : value).replace(/\r\n/g, "\n").slice(0, max);
+  }
+
+  function cleanText(value, max) {
+    return clip(value, max).trim();
+  }
+
   function fresh() {
     return {
       version: 1,
@@ -772,8 +816,63 @@
       goalWeight: 275,
       pocGoal: 500,
       pocBaseline: 0,
-      startedOn: todayKey()
+      startedOn: todayKey(),
+      iAmLine: "I am 275",
+      goals: [],
+      myBurn: "",
+      syncUrl: ""
     };
+  }
+
+  function goalsFrom(list, strict) {
+    var goals = [];
+    var seen = {};
+    list.forEach(function (g) {
+      var text = "";
+      var id = "";
+      if (typeof g === "string") text = g;
+      else if (g && typeof g === "object" && typeof g.text === "string") {
+        text = g.text;
+        id = String(g.id || "");
+      } else if (g == null || g === "") return;
+      else if (strict) throw new Error("A goal is unreadable.");
+      else return;
+      text = cleanText(text, 160);
+      if (!text) return;
+      if (!id || seen[id]) id = uid();
+      seen[id] = true;
+      goals.push({ id: id, text: text });
+    });
+    return goals.slice(0, 24);
+  }
+
+  function dayFrom(src, items, strict) {
+    if (!src || typeof src !== "object" || Array.isArray(src)) {
+      if (strict) throw new Error("A day in the backup is unreadable.");
+      return null;
+    }
+    var day = {};
+    if (src.checks && typeof src.checks === "object") {
+      var checks = checksById(src.checks, items);
+      if (Object.keys(checks).length) day.checks = checks;
+    }
+    if (src.prayed === true) day.prayed = true;
+    var oneMore = cleanText(src.oneMore, 240);
+    if (oneMore) day.oneMore = oneMore;
+    var whoTask = cleanText(src.whoTask, 240);
+    if (whoTask) day.whoTask = whoTask;
+    var whoName = cleanText(src.whoName, 80);
+    if (whoName) day.whoName = whoName;
+    var winsIn = Array.isArray(src.wins) ? src.wins : [];
+    var wins = ["", "", ""];
+    var anyWin = false;
+    for (var i = 0; i < 3; i += 1) {
+      wins[i] = cleanText(winsIn[i], 240);
+      if (wins[i]) anyWin = true;
+    }
+    if (anyWin) day.wins = wins;
+    if (!Object.keys(day).length) return null;
+    return day;
   }
 
   function normalize(raw, strict) {
@@ -814,10 +913,8 @@
       var days = {};
       Object.keys(raw.days).forEach(function (key) {
         if (!/^\d{4}-\d{2}-\d{2}$/.test(key)) return;
-        var src = raw.days[key] && raw.days[key].checks;
-        var checks = {};
-        if (src && typeof src === "object") checks = checksById(src, base.items);
-        if (Object.keys(checks).length) days[key] = { checks: checks };
+        var day = dayFrom(raw.days[key], base.items, strict);
+        if (day) days[key] = day;
       });
       base.days = days;
     } else if (strict && raw.days != null) {
@@ -843,18 +940,79 @@
     if (typeof raw.startedOn === "string" && /^\d{4}-\d{2}-\d{2}$/.test(raw.startedOn)) {
       base.startedOn = raw.startedOn;
     }
+    if (typeof raw.iAmLine === "string") base.iAmLine = cleanText(raw.iAmLine, 160);
+    if (Array.isArray(raw.goals)) base.goals = goalsFrom(raw.goals, strict);
+    else if (raw.goals != null && strict) throw new Error("The backup goals are unreadable.");
+    if (typeof raw.myBurn === "string") base.myBurn = cleanText(raw.myBurn, 600);
+    if (typeof raw.syncUrl === "string") base.syncUrl = raw.syncUrl.trim().slice(0, 300);
     base.version = 1;
     return base;
   }
 
-  function save() {
+  function save(syncDate) {
     try {
       localStorage.setItem(KEY, JSON.stringify(state));
-      return true;
     } catch (err) {
       showToast("Could not save on this phone.");
       return false;
     }
+    if (syncDate && canSync()) queueSync(syncDate);
+    return true;
+  }
+
+  function canSync() {
+    return !!(state && SYNC_URL_RE.test(String(state.syncUrl || "").trim()));
+  }
+
+  function queueSync(date) {
+    syncQueue[date] = true;
+    clearTimeout(syncTimer);
+    syncTimer = setTimeout(flushSync, 1000);
+  }
+
+  function flushSync() {
+    var dates = Object.keys(syncQueue);
+    syncQueue = {};
+    syncTimer = 0;
+    if (!dates.length || !canSync()) return;
+    postRows(dates.map(dayRow)).catch(function () {});
+  }
+
+  function postRows(rows) {
+    return fetch(String(state.syncUrl).trim(), {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify({ days: rows })
+    });
+  }
+
+  function allSyncDates() {
+    var set = {};
+    Object.keys(state.days).forEach(function (d) { set[d] = true; });
+    state.weights.forEach(function (w) {
+      if (w && /^\d{4}-\d{2}-\d{2}$/.test(String(w.date))) set[w.date] = true;
+    });
+    var dates = Object.keys(set).sort();
+    if (!dates.length) dates.push(todayKey());
+    return dates;
+  }
+
+  function syncNow() {
+    commitOpenFields();
+    clearTimeout(syncTimer);
+    syncQueue = {};
+    syncTimer = 0;
+    if (!canSync()) {
+      showToast(String(state.syncUrl || "").trim() ? "That link is not an Apps Script web app." : "Add your sheet link first.");
+      return;
+    }
+    var dates = allSyncDates();
+    postRows(dates.map(dayRow)).then(function () {
+      showToast("Sent " + dates.length + (dates.length === 1 ? " day." : " days."));
+    }).catch(function () {
+      showToast("Could not send. Check the link.");
+    });
   }
 
   function checksById(src, items) {
@@ -928,6 +1086,129 @@
     showToast("Saved");
     var stillNaming = document.activeElement && document.activeElement.closest && document.activeElement.closest("[data-item-label]");
     if (!input.isConnected && !stillNaming) render({ keepScroll: true });
+  }
+
+  function fieldMax(kind) {
+    if (kind === "syncUrl") return 300;
+    if (kind === "whoName") return 80;
+    if (kind === "iAmLine" || kind === "goal") return 160;
+    if (kind === "myBurn") return 600;
+    return 240;
+  }
+
+  function rawField(el) {
+    var kind = el.getAttribute("data-field");
+    var value = String(el.value || "").replace(/\r\n/g, "\n");
+    if (kind === "syncUrl") value = value.trim();
+    return value.slice(0, fieldMax(kind));
+  }
+
+  function trimmedField(el) {
+    return rawField(el).trim();
+  }
+
+  function storedField(el) {
+    var kind = el.getAttribute("data-field");
+    var date = el.getAttribute("data-date");
+    var day = (date && state.days[date]) || {};
+    if (kind === "oneMore" || kind === "whoTask" || kind === "whoName") return day[kind] || "";
+    if (kind === "win") return ((day.wins || [])[Number(el.getAttribute("data-win"))]) || "";
+    if (kind === "iAmLine") return state.iAmLine || "";
+    if (kind === "myBurn") return state.myBurn || "";
+    if (kind === "syncUrl") return state.syncUrl || "";
+    if (kind === "goal") {
+      var id = el.getAttribute("data-goal");
+      var goal = state.goals.filter(function (g) { return g.id === id; })[0];
+      return goal ? goal.text : "";
+    }
+    return "";
+  }
+
+  function pruneDay(date) {
+    var day = state.days[date];
+    if (!day) return;
+    if (day.checks && !Object.keys(day.checks).length) delete day.checks;
+    if (!day.oneMore) delete day.oneMore;
+    if (!day.whoTask) delete day.whoTask;
+    if (!day.whoName) delete day.whoName;
+    if (day.wins && !day.wins.some(function (w) { return w; })) delete day.wins;
+    if (!day.prayed) delete day.prayed;
+    if (!Object.keys(day).length) delete state.days[date];
+  }
+
+  function putField(el, value) {
+    if (!el || value === storedField(el)) return null;
+    var kind = el.getAttribute("data-field");
+    var date = el.getAttribute("data-date") || "";
+    if (kind === "oneMore" || kind === "whoTask" || kind === "whoName") {
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) return null;
+      if (!state.days[date]) {
+        if (!value) return null;
+        state.days[date] = {};
+      }
+      if (value) state.days[date][kind] = value;
+      else delete state.days[date][kind];
+      pruneDay(date);
+      return date;
+    }
+    if (kind === "win") {
+      var idx = Number(el.getAttribute("data-win"));
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(date) || idx < 0 || idx > 2) return null;
+      var existing = state.days[date];
+      var wins = existing && existing.wins ? existing.wins.slice(0, 3) : ["", "", ""];
+      while (wins.length < 3) wins.push("");
+      wins[idx] = value;
+      if (!existing) {
+        if (!value) return null;
+        state.days[date] = {};
+      }
+      if (wins.some(function (w) { return w; })) state.days[date].wins = wins;
+      else delete state.days[date].wins;
+      pruneDay(date);
+      return date;
+    }
+    if (kind === "iAmLine") state.iAmLine = value;
+    else if (kind === "myBurn") state.myBurn = value;
+    else if (kind === "syncUrl") state.syncUrl = value;
+    else if (kind === "goal") {
+      var goalId = el.getAttribute("data-goal");
+      var match = state.goals.filter(function (g) { return g.id === goalId; })[0];
+      if (!match) return null;
+      match.text = value;
+    } else return null;
+    return "";
+  }
+
+  function commitOpenFields() {
+    if (!state) return false;
+    var changed = false;
+    var syncDate = "";
+    document.querySelectorAll("[data-field]").forEach(function (el) {
+      var date = putField(el, trimmedField(el));
+      if (date === null) return;
+      changed = true;
+      if (date) syncDate = date;
+    });
+    if (!changed) return false;
+    save(syncDate || undefined);
+    return true;
+  }
+
+  function finishField(el) {
+    if (!el || !el.getAttribute("data-field")) return;
+    var before = el.dataset.fieldBefore != null ? String(el.dataset.fieldBefore) : trimmedField(el);
+    var next = trimmedField(el);
+    var date = putField(el, next);
+    if (el.isConnected && el.value !== next) el.value = next;
+    el.dataset.fieldBefore = next;
+    if (before === next && date === null) return;
+    if (date !== null && !save(date || undefined)) return;
+    if (before !== next) showToast("Saved");
+  }
+
+  function scheduleFieldFinish(el) {
+    if (!el) return;
+    setTimeout(function () { finishField(el); }, 120);
   }
 
   function checksFor(date) {
@@ -1014,6 +1295,40 @@
       });
     });
     return n;
+  }
+
+  function pocsThrough(date) {
+    var n = Number(state.pocBaseline) || 0;
+    var pocItems = state.items.filter(function (item) { return item.pocs > 0; });
+    Object.keys(state.days).forEach(function (key) {
+      if (key > date) return;
+      var checks = (state.days[key] && state.days[key].checks) || {};
+      pocItems.forEach(function (item) {
+        if (checks[item.id]) n += item.pocs;
+      });
+    });
+    return n;
+  }
+
+  function dayRow(date) {
+    var day = state.days[date] || {};
+    var wins = day.wins || ["", "", ""];
+    var logged = weightOn(date);
+    var checks = checksFor(date);
+    return {
+      date: date,
+      itemsDone: state.items.filter(function (item) { return checks[item.id]; }).map(function (item) { return item.label; }).join(", "),
+      score: score(date) + "/" + totalItems(),
+      prayed: day.prayed ? "yes" : "no",
+      oneMore: day.oneMore || "",
+      whoTask: day.whoTask || "",
+      who: day.whoName || "",
+      win1: wins[0] || "",
+      win2: wins[1] || "",
+      win3: wins[2] || "",
+      weight: logged ? formatLbs(logged.lbs) : "",
+      pocCount: pocsThrough(date)
+    };
   }
 
   function weightOn(date) {
@@ -1240,6 +1555,14 @@
       + '<p class="hint">Tap a day to fill it in or change it.</p>';
   }
 
+  function chartBlock() {
+    var start = state.startWeight;
+    var goal = state.goalWeight;
+    return ''
+      + '<canvas id="chart" role="img" aria-label="Line chart of weigh-ins from ' + esc(formatLbs(start)) + " pounds toward a goal of " + esc(formatLbs(goal)) + '"></canvas>'
+      + '<p class="chart-key"><span><i></i>Weight</span><span><i class="goal"></i>Goal line</span></p>';
+  }
+
   function viewWeight() {
     var delta = poundsToGo();
     var latest = latestWeight();
@@ -1263,8 +1586,7 @@
       + '<h1 class="screen-title">Toward ' + esc(formatLbs(goal)) + "</h1>"
       + '<div class="togo"><strong data-pounds="' + delta + '">' + shown + "</strong><span>" + heading + "</span></div>"
       + '<p class="hint" style="margin-top:0">Start ' + esc(formatLbs(start)) + " · Latest " + esc(formatLbs(latest)) + " · Goal " + esc(formatLbs(goal)) + "</p>"
-      + '<canvas id="chart" role="img" aria-label="Line chart of weigh-ins from ' + esc(formatLbs(start)) + " pounds toward a goal of " + esc(formatLbs(goal)) + '"></canvas>'
-      + '<p class="chart-key"><span><i></i>Weight</span><span><i class="goal"></i>Goal line</span></p>'
+      + chartBlock()
       + '<form class="weigh-form" data-action="weight-form">'
       + '<label class="field">Date<input type="date" name="date" required max="' + todayKey() + '" value="' + lastFriday + '"></label>'
       + '<label class="field">Pounds<input type="number" name="lbs" inputmode="decimal" step="0.1" placeholder="302" required aria-label="Weight in pounds"></label>'
@@ -1310,6 +1632,10 @@
       + "</div>"
       + '<p class="hint error" data-import-error>' + esc(ui.importError || "") + "</p>"
       + '<p class="hint">JSON file. It replaces the data on this phone.</p></section>'
+      + '<section class="section"><h2>Sheet sync</h2>'
+      + '<label class="field">Apps Script link<input data-field="syncUrl" type="url" inputmode="url" maxlength="300" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="https://script.google.com/macros/s/…/exec" value="' + esc(state.syncUrl || "") + '"></label>'
+      + '<button type="button" class="btn btn-block" data-action="sync-now">Sync now</button>'
+      + '<p class="hint">Paste the link from <a href="./SETUP-SYNC.md">the setup steps</a>. Each save sends that day. Sync now sends every day. A blank link sends nothing. Paste it in the home-screen app, not only in Safari.</p></section>'
       + '<section class="section"><h2>Habit list</h2>'
       + '<p class="hint" style="margin-top:0">Edit a name, then tap away. Saved appears at the top. Check-offs stay with that item. POC + is how many clients that check adds. “2 POCs” is set to 2.</p>'
       + editor
@@ -1325,8 +1651,85 @@
       + '<p class="homescreen-note">On iPhone, Safari and the home-screen icon keep separate days. Always open Prize Fighter from the home-screen icon.</p>'
       + '<p class="hint">On iPhone: Share, then Add to Home Screen. On Android: browser menu, then Install app or Add to Home screen. If the icon still opens a link ending in index.html, remove it and add it again from this page.</p>'
       + (ui.canInstall ? '<button type="button" class="btn" data-action="install">Install</button>' : "")
-      + '<p class="hint">Stored on this phone. No account. No network.</p>'
+      + '<p class="hint">Stored on this phone. A sheet link is optional.</p>'
       + '<button type="button" class="text-danger" data-action="reset">Erase data on this phone</button></section>';
+  }
+
+  function viewMorning() {
+    var date = todayKey();
+    var day = state.days[date] || {};
+    var prayed = !!day.prayed;
+    return ''
+      + '<header class="subtop"><p class="brand">Morning</p><p class="when">' + esc(pretty(date)) + "</p></header>"
+      + '<h1 class="screen-title">Start the day</h1>'
+      + '<button type="button" class="item' + (prayed ? " is-on" : "") + '" data-action="prayed" aria-pressed="' + (prayed ? "true" : "false") + '">'
+      + '<span class="box" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5 10 17.5 19 7.5"/></svg></span>'
+      + '<span class="item-label">Prayed</span></button>'
+      + '<label class="field stack">I Am<input data-field="iAmLine" maxlength="160" autocomplete="off" value="' + esc(state.iAmLine || "") + '"></label>'
+      + '<label class="field stack">Today\'s One More<textarea data-field="oneMore" data-date="' + date + '" maxlength="240" rows="3" placeholder="One more thing than yesterday.">' + esc(day.oneMore || "") + "</textarea></label>"
+      + '<section class="who-card">'
+      + "<h2>Who Not How</h2>"
+      + '<p class="hint">Don\'t ask how. Ask who.</p>'
+      + '<label class="field stack">Today\'s growth task<textarea data-field="whoTask" data-date="' + date + '" maxlength="240" rows="3" placeholder="The one thing that grows me today.">' + esc(day.whoTask || "") + "</textarea></label>"
+      + '<label class="field stack">Handed to<input data-field="whoName" data-date="' + date + '" maxlength="80" autocomplete="off" placeholder="Who is doing this?" value="' + esc(day.whoName || "") + '"></label>'
+      + "</section>";
+  }
+
+  function viewEvening() {
+    var date = todayKey();
+    var day = state.days[date] || {};
+    var wins = day.wins || ["", "", ""];
+    var sc = score(date);
+    var total = totalItems();
+    var boxes = [0, 1, 2].map(function (i) {
+      var placeholder = i === 0 ? "What did you do today that yesterday's you didn't?" : "Another win vs yesterday";
+      return '<label class="field stack">Win ' + (i + 1)
+        + '<textarea data-field="win" data-win="' + i + '" data-date="' + date + '" maxlength="240" rows="2" placeholder="' + esc(placeholder) + '">'
+        + esc(wins[i] || "") + "</textarea></label>";
+    }).join("");
+    return ''
+      + '<header class="subtop"><p class="brand">Evening</p><p class="when">' + esc(pretty(date)) + "</p></header>"
+      + '<h1 class="screen-title">Wins</h1>'
+      + '<div class="score-row">' + ringSvg(sc, total)
+      + '<div class="score-side"><p class="score-caption">Today\'s PFD score</p><p class="hint">Checked items on Today.</p></div></div>'
+      + '<p class="hint stack">Three wins vs yesterday.</p>'
+      + boxes;
+  }
+
+  function viewGoals() {
+    var goal = state.goalWeight;
+    var rows = state.goals.map(function (g) {
+      return ''
+        + '<div class="goal-row">'
+        + '<input data-field="goal" data-goal="' + esc(g.id) + '" maxlength="160" value="' + esc(g.text) + '" aria-label="2027 goal" placeholder="A 2027 goal">'
+        + '<button type="button" class="icon-btn" data-action="delete-goal" data-id="' + esc(g.id) + '" aria-label="Delete goal">✕</button>'
+        + "</div>";
+    }).join("");
+    return ''
+      + '<header class="subtop"><p class="brand">Goals</p></header>'
+      + '<h1 class="screen-title">2027</h1>'
+      + (rows || '<p class="note">No goals yet. Add the first one.</p>')
+      + '<button type="button" class="btn btn-block" data-action="add-goal">Add a goal</button>'
+      + '<label class="field stack">My Burn<textarea data-field="myBurn" maxlength="600" rows="4" placeholder="What are you done tolerating?">' + esc(state.myBurn || "") + "</textarea></label>"
+      + '<h2 class="screen-title" style="margin-top:22px">Toward ' + esc(formatLbs(goal)) + "</h2>"
+      + chartBlock()
+      + '<p class="hint">The line uses your Friday weigh-ins.</p>'
+      + '<button type="button" class="btn btn-block" data-action="nav" data-view="weight">Log a weigh-in</button>';
+  }
+
+  function viewMore() {
+    var links = [
+      ["streaks", "Streaks"],
+      ["history", "History"],
+      ["weight", "Weight"],
+      ["settings", "Settings"]
+    ];
+    return ''
+      + '<header class="subtop"><p class="brand">My Prize Fighter Day</p></header>'
+      + '<h1 class="screen-title">More</h1>'
+      + links.map(function (link) {
+        return '<button type="button" class="more-link" data-action="nav" data-view="' + link[0] + '">' + link[1] + '<span aria-hidden="true">›</span></button>';
+      }).join("");
   }
 
   function sheetHtml() {
@@ -1349,6 +1752,10 @@
 
   var views = {
     today: viewToday,
+    morning: viewMorning,
+    evening: viewEvening,
+    goals: viewGoals,
+    more: viewMore,
     streaks: viewStreaks,
     history: viewHistory,
     weight: viewWeight,
@@ -1494,6 +1901,7 @@
 
   function render(opts) {
     commitHabitLabels();
+    commitOpenFields();
     var keep = opts && opts.keepScroll;
     var y = keep ? window.scrollY : 0;
     var celebrate = ui.celebrate;
@@ -1502,14 +1910,27 @@
     document.body.classList.toggle("sheet-open", !!ui.sheetDate);
     ui.celebrate = false;
     ui.justKey = "";
+    var inMore = ui.view === "streaks" || ui.view === "history" || ui.view === "weight" || ui.view === "settings";
     document.querySelectorAll(".tab").forEach(function (btn) {
-      if (btn.dataset.view === ui.view) btn.setAttribute("aria-current", "page");
+      var on = btn.dataset.view === ui.view || (btn.dataset.view === "more" && inMore);
+      if (on) btn.setAttribute("aria-current", "page");
       else btn.removeAttribute("aria-current");
     });
     animateRing();
-    if (ui.view === "weight") requestAnimationFrame(function () { requestAnimationFrame(drawChart); });
+    if (ui.view === "weight" || ui.view === "goals") requestAnimationFrame(function () { requestAnimationFrame(drawChart); });
     if (keep) window.scrollTo(0, y);
     else window.scrollTo(0, 0);
+    if (ui.focusGoal) {
+      var want = ui.focusGoal;
+      ui.focusGoal = "";
+      var nodes = document.querySelectorAll("[data-goal]");
+      for (var gi = 0; gi < nodes.length; gi += 1) {
+        if (nodes[gi].getAttribute("data-goal") === want) {
+          nodes[gi].focus();
+          break;
+        }
+      }
+    }
     if (celebrate) ui.celebrate = false;
   }
 
@@ -1529,18 +1950,20 @@
     if (!state.items.some(function (item) { return item.id === id; })) return;
     if (date > todayKey()) return;
     var before = score(date);
-    var checks = Object.assign({}, checksFor(date));
+    var day = state.days[date] || (state.days[date] = {});
+    var checks = Object.assign({}, day.checks || {});
     if (checks[id]) delete checks[id];
     else checks[id] = true;
-    if (Object.keys(checks).length === 0) delete state.days[date];
-    else state.days[date] = { checks: checks };
+    if (Object.keys(checks).length) day.checks = checks;
+    else delete day.checks;
+    pruneDay(date);
     var after = score(date);
     var total = totalItems();
     ui.justKey = date + ":" + id;
     ui.celebrate = before < total && after === total;
     if (ui.celebrate) showToast("Full day. Prizefighter Day.");
     if (navigator.vibrate) navigator.vibrate(12);
-    save();
+    save(date);
     render({ keepScroll: true });
   }
 
@@ -1548,7 +1971,7 @@
     state.weights = state.weights.filter(function (w) { return w.date !== date; });
     state.weights.push({ date: date, lbs: lbs });
     state.weights.sort(function (a, b) { return a.date < b.date ? -1 : 1; });
-    save();
+    save(date);
   }
 
   function readWeight(form) {
@@ -1598,6 +2021,39 @@
     if (action === "iam") {
       ui.iamOpen = !ui.iamOpen;
       render({ keepScroll: true });
+      return;
+    }
+    if (action === "prayed") {
+      var prayedDate = todayKey();
+      var prayedDay = state.days[prayedDate] || (state.days[prayedDate] = {});
+      if (prayedDay.prayed) delete prayedDay.prayed;
+      else prayedDay.prayed = true;
+      pruneDay(prayedDate);
+      save(prayedDate);
+      render({ keepScroll: true });
+      return;
+    }
+    if (action === "add-goal") {
+      if (state.goals.length >= 24) {
+        showToast("24 goals is the limit.");
+        return;
+      }
+      var goalId = uid();
+      state.goals.push({ id: goalId, text: "" });
+      ui.focusGoal = goalId;
+      save();
+      render({ keepScroll: true });
+      return;
+    }
+    if (action === "delete-goal") {
+      if (!confirm("Remove this goal?")) return;
+      state.goals = state.goals.filter(function (g) { return g.id !== target.dataset.id; });
+      save();
+      render({ keepScroll: true });
+      return;
+    }
+    if (action === "sync-now") {
+      syncNow();
       return;
     }
     if (action === "month") {
@@ -1661,8 +2117,9 @@
       return;
     }
     if (action === "delete-weight") {
-      state.weights = state.weights.filter(function (w) { return w.date !== target.dataset.date; });
-      save();
+      var removedDate = target.dataset.date;
+      state.weights = state.weights.filter(function (w) { return w.date !== removedDate; });
+      save(removedDate);
       showToast("Weigh-in removed.");
       render({ keepScroll: true });
       return;
@@ -1705,11 +2162,18 @@
 
   document.body.addEventListener("focusin", function (event) {
     var input = event.target.closest("[data-item-label]");
-    if (!input || input.dataset.labelBefore != null) return;
-    input.dataset.labelBefore = input.value;
+    if (input && input.dataset.labelBefore == null) input.dataset.labelBefore = input.value;
+    var field = event.target.closest("[data-field]");
+    if (field) field.dataset.fieldBefore = trimmedField(field);
   });
 
   document.body.addEventListener("input", function (event) {
+    var field = event.target.closest("[data-field]");
+    if (field) {
+      var wrote = putField(field, rawField(field));
+      if (wrote !== null) save(wrote || undefined);
+      return;
+    }
     var input = event.target.closest("[data-item-label]");
     if (!input) return;
     var item = findItem(input.getAttribute("data-item-label"));
@@ -1787,20 +2251,27 @@
   document.body.addEventListener("change", function (event) {
     var named = event.target.closest("[data-item-label]");
     if (named) scheduleLabelFinish(named);
+    var field = event.target.closest("[data-field]");
+    if (field) scheduleFieldFinish(field);
   });
 
   document.body.addEventListener("focusout", function (event) {
     var input = event.target.closest("[data-item-label]");
-    if (!input) return;
-    scheduleLabelFinish(input);
+    if (input) scheduleLabelFinish(input);
+    var field = event.target.closest("[data-field]");
+    if (field) scheduleFieldFinish(field);
   });
 
   window.addEventListener("pagehide", function () {
     commitHabitLabels();
+    commitOpenFields();
   });
 
   document.addEventListener("visibilitychange", function () {
-    if (document.visibilityState === "hidden") commitHabitLabels();
+    if (document.visibilityState === "hidden") {
+      commitHabitLabels();
+      commitOpenFields();
+    }
   });
 
   document.addEventListener("keydown", function (event) {
@@ -1818,7 +2289,7 @@
   });
 
   window.addEventListener("resize", function () {
-    if (ui.view === "weight") drawChart();
+    if (ui.view === "weight" || ui.view === "goals") drawChart();
   });
 
   window.addEventListener("beforeinstallprompt", function (event) {
